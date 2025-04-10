@@ -1,0 +1,353 @@
+﻿@model VentaAutos.ViewModels.AutosViewModels
+
+@{
+    ViewData["Title"] = "Autos";
+
+}
+
+<div class="container">
+    <div class="row">
+
+        <div class="mt-3">
+            <div class="mb-3">
+                <a asp-controller="Cuenta" asp-action="LoginDueño" class="btn btn-warning">Login Dueño</a>
+            </div>
+            <div class="dropdown mb-3 mt-4">
+                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownOrden" data-bs-toggle="dropdown" aria-expanded="false">
+                    Ordenar por: @(ViewBag.Orden == "menor" ? "Menor a Mayor" : ViewBag.Orden == "mayor" ? "Mayor a Menor" : "Más relevante")
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownOrden">
+                    <li><a class="dropdown-item @(ViewBag.Orden == "relevante" ? "active" : "")" href="@Url.Action("Autos", new { orden = "relevante", marca = Context.Request.Query["marca"], modelo = Context.Request.Query["modelo"], precio_max = Context.Request.Query["precio_max"], precio_min = Context.Request.Query["precio_min"], anio = Context.Request.Query["anio"], color = Context.Request.Query["color"], km = Context.Request.Query["km"] })">Más relevante</a></li>
+                    <li><a class="dropdown-item @(ViewBag.Orden == "menor" ? "active" : "")" href="@Url.Action("Autos", new { orden = "menor", marca = Context.Request.Query["marca"], modelo = Context.Request.Query["modelo"], precio_max = Context.Request.Query["precio_max"], precio_min = Context.Request.Query["precio_min"], anio = Context.Request.Query["anio"], color = Context.Request.Query["color"], km = Context.Request.Query["km"] })">Menor a Mayor</a></li>
+                    <li><a class="dropdown-item @(ViewBag.Orden == "mayor" ? "active" : "")" href="@Url.Action("Autos", new { orden = "mayor", marca = Context.Request.Query["marca"], modelo = Context.Request.Query["modelo"], precio_max = Context.Request.Query["precio_max"], precio_min = Context.Request.Query["precio_min"], anio = Context.Request.Query["anio"], color = Context.Request.Query["color"], km = Context.Request.Query["km"] })">Mayor a Menor</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-3 tarjetas" >
+
+                <div>
+
+                    @if (!string.IsNullOrEmpty(Model.MarcaSeleccionada))
+                    {
+                        <div class="bg-dark text-warning px-3 py-1 rounded-pill d-inline-flex align-items-center mb-2">
+                            <span>@Model.MarcaSeleccionada</span>
+                            <a href="@Url.Action("Autos", new { modelo = Model.ModeloSeleccionado, precio_max = Model.PrecioMax, precio_min = Model.PrecioMin, anio = Model.AnioSeleccionado, color = Model.ColorSeleccionado, kmMin= Model.KmMin, kmMax = Model.KmMax })"
+                               class="ms-2 text-warning text-decoration-none fw-bold" style="cursor:pointer;">×</a>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.ModeloSeleccionado))
+                    {
+                        <div class="bg-dark text-warning px-3 py-1 rounded-pill d-inline-flex align-items-center mb-2">
+                            <span>@Model.ModeloSeleccionado</span>
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, precio_max = Model.PrecioMax, precio_min = Model.PrecioMin, anio = Model.AnioSeleccionado, color = Model.ColorSeleccionado, kmMin= Model.KmMin, kmMax = Model.KmMax })"
+                               class="ms-2 text-warning text-decoration-none fw-bold" style="cursor:pointer;">×</a>
+                        </div>
+                    }
+
+                    @if(!string.IsNullOrEmpty(Model.AnioSeleccionado))
+                    {
+
+                        <div class="bg-dark text-warning px-3 py-1 rounded-pill d-inline-flex align-items-center mb-2">
+                            <span>@Model.AnioSeleccionado</span>
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado, precio_max = Model.PrecioMax, precio_min = Model.PrecioMin, color = Model.ColorSeleccionado, kmMin= Model.KmMin, kmMax = Model.KmMax })"
+                               class="ms-2 text-warning text-decoration-none fw-bold" style="cursor:pointer;">×</a>
+
+                        </div>
+
+                    }
+
+                    @if (Model.PrecioMin.HasValue && Model.PrecioMin > 0)
+                    {
+
+                        <div class="bg-dark text-warning px-3 py-1 rounded-pill d-inline-flex align-items-center mb-2">
+                            <span>@Model.PrecioMin</span>
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado, precio_max = Model.PrecioMax, color = Model.ColorSeleccionado, kmMin= Model.KmMin, kmMax = Model.KmMax })"
+                               class="ms-2 text-warning text-decoration-none fw-bold" style="cursor:pointer;">×</a>
+
+                        </div>
+
+                    }
+
+                    @if (Model.PrecioMax.HasValue && Model.PrecioMax > 0)
+                    {
+
+                        <div class="bg-dark text-warning px-3 py-1 rounded-pill d-inline-flex align-items-center mb-2">
+                            <span>@Model.PrecioMax</span>
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado, precio_min = Model.PrecioMin, color = Model.ColorSeleccionado, kmMin= Model.KmMin, kmMax = Model.KmMax })"
+                               class="ms-2 text-warning text-decoration-none fw-bold" style="cursor:pointer;">×</a>
+
+                        </div>
+
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.ColorSeleccionado))
+                    {
+
+                        <div class="bg-dark text-warning px-3 py-1 rounded-pill d-inline-flex align-items-center mb-2">
+                            <span>@Model.ColorSeleccionado</span>
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado,precio_max = Model.PrecioMax ,precio_min = Model.PrecioMin, kmMin= Model.KmMin, kmMax = Model.KmMax })"
+                               class="ms-2 text-warning text-decoration-none fw-bold" style="cursor:pointer;">×</a>
+
+                        </div>
+
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.KmSeleccionado))
+                    {
+
+                        <div class="bg-dark text-warning px-3 py-1 rounded-pill d-inline-flex align-items-center mb-2">
+                            <span>@Model.KmSeleccionado</span>
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado,precio_max = Model.PrecioMax ,precio_min = Model.PrecioMin, color = Model.ColorSeleccionado, kmMin= 0, kmMax = Model.KmMaxDb })"
+                               class="ms-2 text-warning text-decoration-none fw-bold" style="cursor:pointer;">×</a>
+
+                        </div>
+
+                    }
+                    
+                </div>
+
+                <h5>Filtrar autos</h5>
+                <form method="get" action="@Url.Action("Autos","Home")" id="auto-filters-form">
+                    <div class="mb-2">
+                        <label for="marca">Marca:</label>
+                        <select id="marca" name="marca" class="form-control tarjetas" onchange="submitForm()">
+                            <option value="">Seleccione una marca</option>
+
+                            @if (Model.Listado_de_marcas?.Any() == true)
+                            {
+                                @foreach (var marca in Model.Listado_de_marcas)
+                                {
+                                    <option value="@marca" selected="@(marca == Model.MarcaSeleccionada)">@marca</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="">No hay marcas disponibles</option>
+                            }
+
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        @if (!string.IsNullOrEmpty(Model.MarcaSeleccionada))
+                        {
+                            <div>
+                                <label for="modelo">Modelo:</label>
+                                <select id="modelo" name="modelo" class="form-control tarjetas" onchange="submitForm()">
+                                    <option value="">Seleccione un modelo</option>
+
+                                    @if(Model.Listado_de_modelos?.Any() == true){
+
+                                        @foreach (var modelo in Model.Listado_de_modelos)
+                                        {
+                                            <option value="@modelo" selected="@(modelo == Model.ModeloSeleccionado)">@modelo</option>
+                                        }
+
+                                    }
+                                    else{
+
+                                        <option value="">No hay modelos disponibles</option>
+
+                                    }
+
+                                </select>
+                            </div>
+                        }
+                        
+                    </div>
+                    <div class="mb-2">
+                        <label for="anio">Año:</label>
+                        <select id="anio" name="anio" class="form-control tarjetas" onchange="submitForm()">
+                            <option value="">Seleccione un año</option>
+
+                            @if (Model.Listado_de_anios?.Any() == true)
+                            {
+
+                                @foreach (var anio in Model.Listado_de_anios)
+                                {
+                                    <option value="@anio" selected="@(anio == Model.AnioSeleccionado)">@anio</option>
+                                }
+
+                            }
+                            else
+                            {
+                                <option value="">No hay años disponibles</option>
+                            }
+
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="precio_min">Precio Mínimo:</label>
+                        @if(Model.PrecioMin != null){
+
+                            <input type="range" id="precio_min" name="precio_min" class="form-range" min="0" max="@((int)(Model.PrecioMaxMin ?? 1000000))" step="100" value="@Model.PrecioMin" oninput="updatePrecioMin(this.value);submitForm()" />
+                            
+                            <span id="precio_min_value">@Model.PrecioMin</span>
+                            
+                        }
+                        else{
+
+                            <input type="range" id="precio_min" name="precio_min" class="form-range" min="0" max="@((int)(Model.PrecioMaxMin ?? 1000000))" step="100" value="0" oninput="updatePrecioMin(this.value);submitForm()" />
+                            
+                            <span id="precio_min_value">@Model.PrecioMin</span>
+
+                        }
+                    </div>
+                    <div class="mb-2">
+                        <label for="precio_max">Precio Máximo:</label>
+                        @if(Model.PrecioMax != null){
+
+                            <input type="range" id="precio_max" name="precio_max" class="form-range" min="0" max="@((int)(Model.PrecioMaxDb ?? 100000000))" step="100" value="@Model.PrecioMax" oninput="updatePrecioMax(this.value);submitForm()" />
+                           
+                            <span id="precio_max_value">@Model.PrecioMax</span>
+
+                        }
+                        else{
+
+                            <input type="range" id="precio_max" name="precio_max" class="form-range" min="0" max="@((int)(Model.PrecioMaxDb ?? 100000000))" step="100" value="0" oninput="updatePrecioMax(this.value);submitForm()" />
+
+                            <span id="precio_max_value">@Model.PrecioMax</span>
+                            
+                        } 
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="color">Color:</label>
+                        <select id="color" name="color" class="form-control tarjetas" onchange="submitForm()">
+                            <option value="">Seleccione un color</option>
+
+                            @if (Model.Listado_de_colores?.Any() == true)
+                            {
+                                @foreach (var color in Model.Listado_de_colores)
+                                {
+                                    <option value="@color" selected="@(color == Model.ColorSeleccionado)">@color</option>
+                                }
+                                
+                            }
+                            else
+                            {
+                                <option value="">No hay colores disponibles</option>
+                            }
+
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="Kilometros">Kilometros:</label>
+                        <div class="list-group">
+
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado,
+                                precio_max = Model.PrecioMax , precio_min = Model.PrecioMin, anio=Model.AnioSeleccionado,
+                                color = Model.ColorSeleccionado,kmSeleccionado = "0 Km",kmMin = 0,kmMax = 0 })"
+                               class="list-group-item list-group-item-action">
+                                0 Km (@Model.AutosCon0km)
+                            </a>
+
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado,
+                                precio_max = Model.PrecioMax , precio_min = Model.PrecioMin, anio=Model.AnioSeleccionado,
+                                color = Model.ColorSeleccionado,kmSeleccionado = "0 a 60000 km",kmMin = 0,kmMax = 60000 })"
+                               class="list-group-item list-group-item-action">
+                                0 a 60000 km (@Model.AutosCon0A60000)
+                            </a>
+
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado, 
+                                precio_max = Model.PrecioMax , precio_min = Model.PrecioMin, anio=Model.AnioSeleccionado, 
+                                color = Model.ColorSeleccionado,kmSeleccionado = "60000 a 80000 km",kmMin = 60000,kmMax = 80000})"
+                               class="list-group-item list-group-item-action">
+                                60000 a 80000 km (@Model.AutosCon60000A80000) 
+                            </a>
+
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado,
+                                precio_max = Model.PrecioMax , precio_min = Model.PrecioMin, anio=Model.AnioSeleccionado,
+                                color = Model.ColorSeleccionado,kmSeleccionado = "80000 a 100000 km",kmMin = 80000,kmMax = 100000 })"
+                               class="list-group-item list-group-item-action">
+                                80000 a 100000 km (@Model.AutosCon80000A100000)
+                            </a>
+
+                            <a href="@Url.Action("Autos", new { marca = Model.MarcaSeleccionada, modelo = Model.ModeloSeleccionado,
+                                precio_max = Model.PrecioMax , precio_min = Model.PrecioMin, anio=Model.AnioSeleccionado,
+                                color = Model.ColorSeleccionado,kmSeleccionado = "100000 km o mas",kmMin = 100000,kmMax = Model.KmMaxDb })"
+                               class="list-group-item list-group-item-action">
+                                100000 km o mas (@Model.AutosCon100000oMas)
+                            </a>
+
+                        </div>
+
+                                 
+                    </div>
+
+                    <a href="@Url.Action("Autos")" class="btn btn-secondary w-100 mt-2">Limpiar Filtros</a>
+                </form>
+                
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="row">
+
+                @if (Model.Autos?.Any() == true){
+
+                    @foreach (var auto in Model.Autos)
+                    {
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 tarjetas">
+                                @if (auto.Imagenes?.Any() == true)
+                                {
+                                    <img src="@Html.Raw(auto.Imagenes.FirstOrDefault()?.ImagenUrl)"
+                                         class="card-img-top"
+                                         alt="@auto.Marca @auto.Modelo"
+                                         style="height: 200px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top no-image no-imagen">
+                                        <span>No hay imagen disponible</span>
+                                    </div>
+                                }
+
+                                <div class="card-body">
+           
+                                    <h5 class="card-title">@auto.Marca - @auto.Modelo</h5>
+                                    <h6 class="card-text">@auto.Anio - @(auto.Km.HasValue ? $"{auto.Km} km" : "Kilometraje no disponible")</h6>
+                                    <p class="card-text">Precio: $@auto.Precio</p>
+
+                                    <a asp-controller="Autos" asp-action="Details" asp-route-id="@auto.Id" class="btn btn-primary">Ver más</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+                else{
+
+                    <p>No hay autos registrados</p>
+
+                }   
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updatePrecioMin(value) {
+        document.getElementById('precio_min_value').innerText = value;
+        document.getElementById('precio_min').value = value; 
+    }
+
+    function updatePrecioMax(value) {
+        document.getElementById('precio_max_value').innerText = value;
+        document.getElementById('precio_max').value = value; 
+    }
+
+    function updatekmMax(value) {
+        document.getElementById('km_max_value').innerText = value;
+        document.getElementById('kilometro').value = value;
+    }
+
+     function submitForm() {
+        document.getElementById('auto-filters-form').submit();
+    }
+
+</script>

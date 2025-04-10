@@ -1,0 +1,77 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.footer {
+    background-color: #121212 !important; 
+    color: white !important;
+}
+.tarjetas {
+    background-color: #121212 !important;
+    color: white !important;
+    border-color: #454545 !important;
+}
+.bg-custom-dark {
+    background-color: #121212 !important;
+    color: white !important;
+}
+.card-hover:hover {
+    background-color: #424949 !important;
+    transition: background-color 0.3s ease;
+}
+.nav_menu {
+    z-index: 1050;
+    height: 100px;
+    background-color: #121212;
+}
+
+.navbar .navbar-brand.active {
+    color: #dc3545 !important;
+    font-weight: bold;
+}
+
+.content {
+    margin-top: 100px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.no-imagen {
+    height: 200px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.caja-seleccionada {
+    
+}
+
+.filter-checkbox {
+    accent-color: #CD5C5C; /* Cambia el color del checkbox cuando está marcado */
+}
+
+.filter-checkbox:checked {
+        background-color: #CD5C5C; /* Fondo cuando está marcado */
+        border: 2px solid #4CAF50; /* Borde cuando está marcado */
+}
+
+label {
+    font-size: 16px;
+    margin-left: 8px;
+}

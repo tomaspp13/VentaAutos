@@ -1,0 +1,162 @@
+﻿@model VentaAutos.Models.Auto
+
+@{
+    ViewData["Title"] =Model.Marca+Model.Modelo;
+}
+
+<h1>@Model.Marca @Model.Modelo</h1>
+<div class="row">  
+
+    <div class="col-md-4">
+        <hr />
+        <dl class="row">
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Marca)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Marca)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Modelo)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Modelo)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Anio)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Anio)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Precio)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Precio)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Km)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Km)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Color)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Color)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Motor)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Motor)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Transmision)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Transmision)
+            </dd>
+            <dt class="col-sm-3">
+                Carga
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Capacidad_de_carga)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Seguridad)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Seguridad)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Conbustible)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Conbustible)
+            </dd>
+        </dl>
+
+        <div >
+            
+            @if (ViewBag.DesdeAdmin == true)
+            {
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Editar</a>
+                <span> | </span>
+                <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+            }
+        </div>
+
+        <div class ="mt-3">
+
+            <p>@Model?.Detalles</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-8 text-center">
+
+        <div id="carouselAuto" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-indicators">
+                @if (Model != null && Model.Imagenes != null && Model.Imagenes.Any())
+                {
+                    int index = 0;
+                    foreach (var imagen in Model.Imagenes)
+                    {
+                        <button type="button" data-bs-target="#carouselAuto" data-bs-slide-to="@index"
+                                class="@(index == 0 ? "active" : "")"
+                                aria-current="@(index == 0 ? "true" : "")"
+                                aria-label="Slide @(index + 1)"></button>
+                        index++;
+                    }
+                }
+            </div>
+
+                
+
+
+            <div class="carousel-inner">
+                @if (Model != null && Model.Imagenes != null && Model.Imagenes.Any())
+                {
+                    int index = 0;
+                    foreach (var imagen in Model.Imagenes)
+                    {
+                        <div class="carousel-item @(index == 0 ? "active" : "")">
+                            <img src="@imagen.ImagenUrl"
+                                 class="d-block w-100"
+                                 alt="Imagen @(index + 1) del auto @Model.Marca @Model.Modelo">
+                        </div>
+                        index++;
+                    }
+                }
+                else
+                {
+                    <div class="carousel-item active">
+                        <img src="/img/placeholder.jpg"
+                             class="d-block w-100"
+                             alt="Imagen no disponible">
+                    </div>
+                }
+            </div>
+
+            <!-- Controles -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselAuto" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselAuto" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+

@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewData["Title"] = "Contacto";
+}
+
+<body>
+
+    <div class=" text-center mt-4 fw-bold fs-5 ">
+
+        <h2>Consultas y comentarios</h2>
+
+    </div>
+
+    <div class=" text-center"> <p>Dejános tu mensaje a través de los canales de contacto y te contestaremos a la brevedad.</p> </div>
+
+    <div class="container mt-5">
+        <div class="row">
+
+            
+            <div class="col-md-6 mb-4">
+                <form method="post" action="@Url.Action("Enviar", "Contactos")">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required style="border-color:#454545;background-color:#121212;color:white;">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email" style="border-color:#454545;background-color:#121212;color:white;" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mensaje" class="form-label">Mensaje</label>
+                        <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required style="border-color:#454545;background-color:#121212;color:white;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+
+            
+            <div class="col-md-6">
+
+                
+                <div class="row mb-3">
+                    <div class="col" >
+                        <div class="card" style="border-color:#454545;background-color:#121212;color:white">
+                            <div class="card-body" >
+                                <h5 class="card-title">Dirección</h5>
+                                <p class="card-text">Calle Ficticia 123, Buenos, Argentina</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="card" style="border-color:#454545;background-color:#121212;color:white">
+                            <div class="card-body">
+                                <h5 class="card-title">Teléfono</h5>
+                                <p class="card-text">+1 234 567 890</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="card" style="border-color:#454545;background-color:#121212;color:white;">
+                            <div class="card-body" >
+                                <h5 class="card-title">Correo Electrónico</h5>
+                                <p class="card-text">contacto@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="card" style="border-color:#454545;background-color:#121212;color:white;">
+                            <div class="card-body">
+                                <h5 class="card-title">Redes Sociales</h5>
+                                <p class="card-text">
+                                    <a href="https://facebook.com" target="_blank">Facebook</a><br>
+                                    <a href="https://twitter.com" target="_blank">Twitter</a><br>
+                                    <a href="https://instagram.com" target="_blank">Instagram</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+        
+
+</body>
+
+@if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+{
+    <div class="alert alert-success mt-3">
+        @ViewBag.Mensaje
+    </div>
+}
+

@@ -1,0 +1,186 @@
+﻿@model VentaAutos.Models.Auto
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Editar</h1>
+
+<h4>Auto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-2">
+                <label asp-for="Marca" class="control-label mb-2"></label>
+                <input asp-for="Marca" class="form-control" />
+                <span asp-validation-for="Marca" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Modelo" class="control-label mb-2"></label>
+                <input asp-for="Modelo" class="form-control" />
+                <span asp-validation-for="Modelo" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Anio" class="control-label mb-2">Año</label>
+                <input asp-for="Anio" class="form-control" />
+                <span asp-validation-for="Anio" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Precio" class="control-label mb-2"></label>
+                <input asp-for="Precio" class="form-control"/>
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Km" class="control-label mb-2"></label>
+                <input asp-for="Km" class="form-control" type="text" />
+                <span asp-validation-for="Km" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Color" class="control-label mb-2"></label>
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+
+                <label asp-for="Motor" class="control-label mb-2"></label>
+                <input asp-for="Motor" class="form-control" />
+                <span asp-validation-for="Motor" class="text-danger"></span>
+
+            </div>
+            <div class="form-group mb-2">
+
+                <label asp-for="Transmision" class="control-label mb-2"></label>
+                <input asp-for="Transmision" class="form-control" />
+                <span asp-validation-for="Transmision" class="text-danger"></span>
+
+            </div>
+            <div class="form-group mb-2">
+
+                <label asp-for="Capacidad_de_carga" class="control-label mb-2"></label>
+                <input asp-for="Capacidad_de_carga" class="form-control" />
+                <span asp-validation-for="Capacidad_de_carga" class="text-danger"></span>
+
+            </div>
+            <div class="form-group mb-2">
+
+                <label asp-for="Seguridad" class="control-label mb-2"></label>
+                <input asp-for="Seguridad" class="form-control" />
+                <span asp-validation-for="Seguridad" class="text-danger"></span>
+
+            </div>
+            <div class="form-group mb-2">
+
+                <label asp-for="Conbustible" class="control-label mb-2"></label>
+                <input asp-for="Conbustible" class="form-control" />
+                <span asp-validation-for="Conbustible" class="text-danger"></span>
+
+            </div>
+            <div class="form-group mb-2">
+
+                <label asp-for="Detalles" class="control-label mb-2"></label>
+                <input asp-for="Detalles" class="form-control" />
+                <span asp-validation-for="Detalles" class="text-danger"></span>
+
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="Imagenes" class="control-label mb-2"></label>
+
+                <div class="existing-images">
+                    @if (Model.Imagenes != null && Model.Imagenes.Any())
+                    {
+                        <ul>
+                            @foreach (var imagen in Model.Imagenes)
+                            {
+                                <li>
+                                    <img src="@imagen.ImagenUrl" alt="Imagen del auto" width="100" />
+                                    <label>
+                                        <input type="checkbox" name="imagenesToDelete" value="@imagen.Id" /> Eliminar
+                                    </label>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No hay imágenes cargadas.</p>
+                    }
+
+                </div>
+
+                <input type="file" name="imagenes" class="form-control" multiple/>
+                <span asp-validation-for="Imagenes" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3 ">
+                <input type="submit" value="Guardar" class="btn btn-primary"/> |
+                <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-8 text-center">
+
+        <div id="carouselAuto" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-indicators">
+                @if (Model.Imagenes != null && Model.Imagenes.Any())
+                {
+                    int index = 0;
+                    foreach (var imagen in Model.Imagenes)
+                    {
+                        <button type="button" data-bs-target="#carouselAuto" data-bs-slide-to="@index"
+                                class="@(index == 0 ? "active" : "")"
+                                aria-current="@(index == 0 ? "true" : "")"
+                                aria-label="Slide @(index + 1)"></button>
+                        index++;
+                    }
+                }
+            </div>
+
+            <div class="carousel-inner">
+                @if (Model.Imagenes != null && Model.Imagenes.Any())
+                {
+                    int index = 0;
+                    foreach (var imagen in Model.Imagenes)
+                    {
+                        <div class="carousel-item @(index == 0 ? "active" : "")">
+                            <img src="@imagen.ImagenUrl"
+                                 class="d-block w-100"
+                                 alt="Imagen @(index + 1) del auto @Model.Marca @Model.Modelo">
+                        </div>
+                        index++;
+                    }
+                }
+                else
+                {
+                    <div class="carousel-item active">
+                        <img src="/img/placeholder.jpg"
+                             class="d-block w-100"
+                             alt="Imagen no disponible">
+                    </div>
+                }
+            </div>
+
+            <!-- Controles -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselAuto" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselAuto" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

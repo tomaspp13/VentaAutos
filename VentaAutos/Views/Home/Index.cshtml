@@ -1,0 +1,102 @@
+﻿@model IEnumerable<VentaAutos.Models.Auto>
+
+@{
+    ViewData["Title"] = "Auto Center";
+}
+<head>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="font-family: 'Roboto', sans-serif;">
+
+    <div class="container mt-4 position-relative content">
+       
+        <div class="row justify-content-center">
+            <div class="col-md-10 position-relative">
+                <img src="~/Images/fotologo.jpg" class="img-fluid w-100 rounded shadow">
+
+                <div id="beneficiosCarousel" class="carousel slide position-absolute bottom-0 start-50 translate-middle-x bg-dark bg-opacity-75 text-white p-3 rounded" data-bs-ride="carousel" style="width: 75%; max-width: 800px; margin-bottom:1.5%;">
+                    <div class="carousel-inner text-center">
+
+                        <div class="carousel-item active">
+                            <h3>🚗 Variedad de Autos</h3>
+                            <p>Encuentra autos de diferentes modelos y marcas al mejor precio.</p>
+                        </div>
+
+                        <div class="carousel-item">
+                            <h3>💰 Precios Competitivos</h3>
+                            <p>Ofrecemos los mejores precios del mercado con opciones de financiamiento.</p>
+                        </div>
+
+                        <div class="carousel-item">
+                            <h3>🔍 Transparencia</h3>
+                            <p>Todos nuestros autos han sido inspeccionados y certificados para tu tranquilidad.</p>
+                        </div>
+
+                        <div class="carousel-item">
+                            <h3>🛠 Garantía y Soporte</h3>
+                            <p>Brindamos garantía en nuestros autos y asistencia post-venta.</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Controles del carrusel -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#beneficiosCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#beneficiosCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="d-flex flex-column align-items-center justify-content-center mt-5">
+            <h1>InterState</h1>
+            <p>Donde encontrarás los mejores autos a precios competitivos y un servicio al cliente que te hace sentir como en casa</p>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="col">
+                        <div class="card card-hover d-flex flex-column h-100 tarjetas">
+                            <div class="card-body">
+                                <h5 class="card-title">Asesoría Personalizada</h5>
+                                <p class="card-text">Nuestro equipo te brindará asesoramiento personalizado para que tomes la mejor decisión según tus necesidades y presupuesto.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="col">
+                        <div class="card card-hover d-flex flex-column h-100 tarjetas">
+                            <div class="card-body">
+                                <h5 class="card-title">Precios Competitivos</h5>
+                                <p class="card-text">Nuestros autos tienen precios ajustados al mercado para que tengas el mejor valor. Además, ofrecemos opciones de financiamiento accesibles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="col">
+                        <div class="card card-hover d-flex flex-column h100 tarjetas">
+                            <div class="card-body">
+                                <h5 class="card-title">Financiamiento</h5>
+                                <p class="card-text">Ofrecemos planes de financiamiento adaptados a tus posibilidades, para que puedas comprar el auto de tus sueños sin preocupaciones.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>

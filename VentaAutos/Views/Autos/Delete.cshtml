@@ -1,0 +1,123 @@
+﻿@model VentaAutos.Models.Auto
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar</h1>
+
+<h3>Estas seguro de eliminar el auto?</h3>
+<div class="row">
+
+    <div class="col-md-4">
+        <h4>Auto</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Marca)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Marca)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Modelo)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Modelo)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Anio)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Anio)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Precio)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Precio)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Km)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Km)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Color)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Color)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id"/>
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+            
+        </form>
+    </div>
+
+    <div class="col-md-8 text-center">
+
+        <div id="carouselAuto" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-indicators">
+                @if (Model.Imagenes != null && Model.Imagenes.Any())
+                {
+                    int index = 0;
+                    foreach (var imagen in Model.Imagenes)
+                    {
+                        <button type="button" data-bs-target="#carouselAuto" data-bs-slide-to="@index"
+                                class="@(index == 0 ? "active" : "")"
+                                aria-current="@(index == 0 ? "true" : "")"
+                                aria-label="Slide @(index + 1)"></button>
+                        index++;
+                    }
+                }
+            </div>
+
+            <div class="carousel-inner">
+                @if (Model.Imagenes != null && Model.Imagenes.Any())
+                {
+                    int index = 0;
+                    foreach (var imagen in Model.Imagenes)
+                    {
+                        <div class="carousel-item @(index == 0 ? "active" : "")">
+                            <img src="@imagen.ImagenUrl"
+                                 class="d-block w-100"
+                                 alt="Imagen @(index + 1) del auto @Model.Marca @Model.Modelo">
+                        </div>
+                        index++;
+                    }
+                }
+                else
+                {
+                    <div class="carousel-item active">
+                        <img src="/img/placeholder.jpg"
+                             class="d-block w-100"
+                             alt="Imagen no disponible">
+                    </div>
+                }
+            </div>
+
+            <!-- Controles -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselAuto" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselAuto" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+    
