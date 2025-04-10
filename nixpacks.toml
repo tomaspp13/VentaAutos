@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["dotnet-sdk_8"]
+nixPkgs = ['dotnet-sdk_8']
 
 [phases.build]
-cmds = ["dotnet restore", "dotnet publish -c Release -o out"]
+cmds = ['dotnet build']
 
-[start]
-cmd = "dotnet out/VentaAutos.dll"
+[phases.start]
+cmd = 'dotnet run --project VentaAutos'
