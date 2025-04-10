@@ -5,7 +5,7 @@
 namespace VentaAutos.Migrations
 {
     /// <inheritdoc />
-    public partial class CambiarTipoKm : Migration
+    public partial class InicialPostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

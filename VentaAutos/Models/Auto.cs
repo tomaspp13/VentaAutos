@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace VentaAutos.Models
 
@@ -12,6 +13,8 @@ namespace VentaAutos.Models
 
         [Display(Name = "Año")]
         public string? Anio { get; set; }
+        
+        [Precision(18, 2)]
         public decimal Precio { get; set; }
 
         [Display(Name = "Kilometro")]
