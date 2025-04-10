@@ -58,7 +58,7 @@ namespace VentaAutos.Migrations
 
                     b.Property<decimal>("Precio")
                         .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Seguridad")
                         .HasColumnType("text");

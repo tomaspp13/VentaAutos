@@ -11,8 +11,8 @@ using VentaAutos.Models;
 namespace VentaAutos.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250410171038_PostgresInicial")]
-    partial class PostgresInicial
+    [Migration("20250410215859_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,7 +61,7 @@ namespace VentaAutos.Migrations
 
                     b.Property<decimal>("Precio")
                         .HasPrecision(18, 2)
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Seguridad")
                         .HasColumnType("text");
