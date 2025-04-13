@@ -8,10 +8,10 @@ using VentaAutos.Models;
 
 #nullable disable
 
-namespace VentaAutos.Migrations
+namespace VentaAutos.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250410215859_InitialCreate")]
+    [Migration("20250411234833_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

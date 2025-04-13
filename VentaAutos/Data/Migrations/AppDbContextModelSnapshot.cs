@@ -7,7 +7,7 @@ using VentaAutos.Models;
 
 #nullable disable
 
-namespace VentaAutos.Migrations
+namespace VentaAutos.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot

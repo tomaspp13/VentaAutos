@@ -1,9 +1,9 @@
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using VentaAutos.Models;
 using VentaAutos.ViewModels;
 
@@ -100,10 +100,10 @@ namespace VentaAutos.Controllers
                 var viewModels = new AutosViewModels
                 {
                     Autos = autos,
-                    Listado_de_marcas = autos.Select(a => a.Marca).Where(a => a != null).Distinct().ToList()!,
-                    Listado_de_modelos = autos.Where(a => a.Marca == marca).Select(a => a.Modelo).Where(m => m != null).Distinct().ToList()!,
-                    Listado_de_anios = autos.Select(a => a.Anio).Where(a => a != null).Distinct().ToList()!,
-                    Listado_de_colores = autos.Select(a => a.Color).Where(a => a != null).Distinct().ToList()!,
+                    Listado_de_marcas = autos.Where(a => a.Marca != null).GroupBy(a => a.Marca).Select(g => g.Key).OrderBy(m => m).ToList()!,
+                    Listado_de_modelos = autos.Where(a => a.Marca == marca && a.Modelo != null).GroupBy(a => a.Modelo).Select(g => g.Key).OrderBy(m => m).ToList()!,
+                    Listado_de_anios = autos.Where(a => a.Anio != null).GroupBy(a => a.Anio).Select(g => g.Key).OrderBy(a => a).ToList()!,
+                    Listado_de_colores = autos.Where(a => a.Color != null).GroupBy(a => a.Color).Select(g => g.Key).OrderBy(a => a).ToList()!,
                     AutosCon0km = autos.Where(a => a.Km == 0).Count().ToString(),
                     AutosCon0A60000 = autos.Where(a => a.Km >= 0 && a.Km <= 60000).Count().ToString(),
                     AutosCon60000A80000 = autos.Where(a => a.Km > 60000 && a.Km <= 80000).Count().ToString(),

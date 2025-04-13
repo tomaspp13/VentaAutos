@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using VentaAutos.Models;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 
@@ -6,23 +6,30 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-    
-    if (builder.Environment.IsDevelopment())
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseNpgsql(connectionString, npgsqlOptions =>
     {
-        options.EnableDetailedErrors();
-        options.EnableSensitiveDataLogging();
-    }
+        npgsqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(5), null);
+        if (builder.Environment.IsDevelopment())
+        {
+            options.EnableDetailedErrors();
+            options.EnableSensitiveDataLogging();
+        }
+    });
+});
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5000); 
+    serverOptions.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps()); // HTTPS
 });
 
 builder.Services.AddHealthChecks();
-
 
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation(); 
 
 var app = builder.Build();
-
 
 using (var scope = app.Services.CreateScope())
 {
@@ -38,7 +45,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -53,7 +59,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
-
 
 app.MapControllerRoute(
     name: "default",
