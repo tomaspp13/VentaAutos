@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VentaAutos.Models;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using Microsoft.Extensions.Options;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuración de la base de datos con Npgsql
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -18,25 +21,23 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     });
 });
 
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.ListenAnyIP(8080); 
-});
-
+// Configurar puerto 8080 para Railway
+builder.WebHost.UseUrls("http://0.0.0.0:8080");
 
 builder.Services.AddHealthChecks();
 
 builder.Services.AddControllersWithViews()
-    .AddRazorRuntimeCompilation(); 
+    .AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
+// Aplicación de migraciones al iniciar
 using (var scope = app.Services.CreateScope())
 {
     try
     {
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        dbContext.Database.Migrate(); 
+        dbContext.Database.Migrate();
     }
     catch (Exception ex)
     {
@@ -48,18 +49,19 @@ using (var scope = app.Services.CreateScope())
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts(); 
+    app.UseHsts();
 }
 else
 {
     app.UseDeveloperExceptionPage();
 }
 
-app.UseHttpsRedirection();
+// Eliminar redirección HTTPS (no soportada por Railway)
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
+// Mapeo de ruta predeterminada
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
