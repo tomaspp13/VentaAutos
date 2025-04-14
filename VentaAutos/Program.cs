@@ -20,9 +20,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.ListenAnyIP(5000); 
-    serverOptions.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps()); // HTTPS
+    serverOptions.ListenAnyIP(8080); 
 });
+
 
 builder.Services.AddHealthChecks();
 
