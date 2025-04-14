@@ -3,10 +3,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace VentaAutos.Data.Migrations
+namespace VentaAutos.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreateV2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace VentaAutos.Data.Migrations
                     Marca = table.Column<string>(type: "text", nullable: true),
                     Modelo = table.Column<string>(type: "text", nullable: true),
                     Anio = table.Column<string>(type: "text", nullable: true),
-                    Precio = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    Precio = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     Km = table.Column<int>(type: "integer", nullable: true),
                     Color = table.Column<string>(type: "text", nullable: true),
                     Detalles = table.Column<string>(type: "text", nullable: true),
