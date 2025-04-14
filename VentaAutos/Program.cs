@@ -6,7 +6,6 @@ using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de la base de datos con Npgsql
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -21,7 +20,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     });
 });
 
-// Configurar puerto 8080 para Railway
 builder.WebHost.UseUrls("http://0.0.0.0:8080");
 
 builder.Services.AddHealthChecks();
@@ -31,18 +29,20 @@ builder.Services.AddControllersWithViews()
 
 var app = builder.Build();
 
-// Aplicación de migraciones al iniciar
 using (var scope = app.Services.CreateScope())
 {
     try
     {
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        dbContext.Database.Migrate();
+        dbContext.Database.Migrate();  // Intenta aplicar las migraciones
+
     }
     catch (Exception ex)
     {
+        // Captura y registra la excepción
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "Error al aplicar migraciones a la base de datos");
+        throw;  // Vuelve a lanzar la excepción para que sea visible en los logs
     }
 }
 
@@ -56,12 +56,12 @@ else
     app.UseDeveloperExceptionPage();
 }
 
-// Eliminar redirección HTTPS (no soportada por Railway)
+// app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
-// Mapeo de ruta predeterminada
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
